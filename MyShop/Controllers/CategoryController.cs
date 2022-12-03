@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MyShop.Data;
 using MyShop.Models;
-using MyShop.Data;
-using MyShop.Models;
+
 
 namespace MyShop.Controllers
 {
