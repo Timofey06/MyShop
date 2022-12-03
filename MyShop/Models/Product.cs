@@ -29,5 +29,14 @@ namespace MyShop.Models
         // добавление внешнего ключа - связь с другой таблицей
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
+
+
+
+        //дз
+       /* [Display(Name = "MyModel Id")]
+        public int MyModelId { get; set; }
+
+        [ForeignKey("MyModelId")]
+        public virtual MyModel MyModel { get; set; }*/
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MyShop;
 using MyShop.Data;
 using MyShop.Data;
@@ -96,7 +97,75 @@ namespace ShopM4.Controllers
             else
             {
                 //update
+                var product=db.Product.AsNoTracking().FirstOrDefault(u=>u.Id==productViewModel.Product.Id);
+                if (files.Count>0)
+                {
+                    string upload = wwRoot + "/" + PathManager.ImageProductPass;
+                    string imageName = Guid.NewGuid().ToString();
+                    string extansion = Path.GetExtension(files[0].FileName);
+                    string path = upload + imageName + extansion;
+
+                    var oldFile =upload+product.Image;
+                    if (System.IO.File.Exists(oldFile))
+                    {
+                        System.IO.File.Delete(oldFile);
+                    }
+
+                    var fileStream = new FileStream(path, FileMode.Create);
+
+                    files[0].CopyTo(fileStream);
+                    
+
+                    productViewModel.Product.Image=imageName + extansion;
+
+                }
+                else
+                {
+                    productViewModel.Product.Image = product.Image;
+                }
+                db.Product.Update(productViewModel.Product);
             }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public IActionResult Delete(int? id)
+        {
+            if (id==null||id==0)
+            {
+                return NotFound();
+            }
+            Product product = db.Product.Find(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            product.Category = db.Category.Find(product.CategoryId);
+            if (product.Category==null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+        [HttpPost]
+        public IActionResult DeletePost(int? id)
+        {
+            string wwRoot = env.WebRootPath;
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Product product = db.Product.Find(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            string upload = wwRoot + "/" + PathManager.ImageProductPass;
+            var oldFile = upload + product.Image;
+            if (System.IO.File.Exists(oldFile))
+            {
+                System.IO.File.Delete(oldFile);
+            }
+            db.Remove(product);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

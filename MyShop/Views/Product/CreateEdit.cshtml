@@ -49,6 +49,7 @@
         </select>
         <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
     </p>
+   
 
     <p>
         @if (Model.Product.Id != 0)
@@ -67,6 +68,14 @@
         <div asp-validation-summary="All"></div>
     </p>
 </form>
+@if (Model.Product.Id!=0)
+{
+    <p>
+
+        <img src="/@PathManager.ImageProductPass@Model.Product.Image" width="100" />
+    </p>
+}
+
 
 @section Scripts {
     @{
