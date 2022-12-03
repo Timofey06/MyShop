@@ -30,12 +30,15 @@
 
     <p>
         <label asp-for="Product.Description"></label>
-        <input asp-for="Product.Description" class="form-control" />
+        <!--<input asp-for="Product.Description" class="form-control" />-->
+        <textarea asp-for="Product.Description" class="form-control summernote"></textarea>
+        <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
     </p>
 
     <p>
         <label asp-for="Product.Image"></label>
-        <input type="file" name="files" class="form-control" multiple/>
+        <input type="file" name="files" class="form-control" id="uploadedImage" multiple />
+        
     </p>
 
     <p>
@@ -50,11 +53,11 @@
     <p>
         @if (Model.Product.Id != 0)
         {
-            <input type="submit" class="btn btn-success" value="Update" />
+            <input type="submit" class="btn btn-success" value="Update" onclick="input()" />
         }
         else
         {
-            <input type="submit" class="btn btn-success" value="Create" />
+            <input type="submit" class="btn btn-success" onclick="input()" value="Create" />
         }
 
         <a class="btn btn-primary" asp-controller="Category" asp-action="Index"> Back </a>
@@ -69,6 +72,24 @@
     @{
     <partial name="_ValidationScriptsPartial" />
     }
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                height: 200
+            });
+        });
 
+        function input() {
+            if (document.getElementById("uploadedImage").value == "") {
+                Swal.fire(
+                    'Error!',
+                    'Please upload image!',
+                    'error'
+                )
+                return false;
+            }
+            return true;
+        }
+    </script>
   
 }
