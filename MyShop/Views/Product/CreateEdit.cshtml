@@ -32,9 +32,14 @@
         <label asp-for="Product.Description"></label>
         <!--<input asp-for="Product.Description" class="form-control" />-->
         <textarea asp-for="Product.Description" class="form-control summernote"></textarea>
-        <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+        <span asp-validation-for="Product.Description" class="text-danger"></span>
     </p>
-
+    <p>
+        <label asp-for="Product.ShortDescription"></label>
+        <!--<input asp-for="Product.Description" class="form-control" />-->
+        <input asp-for="Product.ShortDescription" class="form-control ">
+        <span asp-validation-for="Product.ShortDescription" class="text-danger"></span>
+    </p>
     <p>
         <label asp-for="Product.Image"></label>
         <input type="file" name="files" class="form-control" id="uploadedImage" multiple />
@@ -61,7 +66,7 @@
     <p>
         @if (Model.Product.Id != 0)
         {
-            <input type="submit" class="btn btn-success" value="Update" onclick="input()" />
+            <input type="submit" class="btn btn-success" value="Update" />
         }
         else
         {

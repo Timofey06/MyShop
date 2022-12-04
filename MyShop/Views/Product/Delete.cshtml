@@ -31,6 +31,12 @@
         <textarea asp-for="Description" class="form-control summernote" disabled></textarea>
     </p>
     <p>
+        <label asp-for="ShortDescription"></label>
+        <!--<input asp-for="Product.Description" class="form-control" />-->
+        <input asp-for="ShortDescription" class="form-control " disabled>
+        
+    </p>
+    <p>
         <label asp-for="CategoryId"></label>
         <input asp-for="Category.Name" class="form-control" disabled/>
     </p>
