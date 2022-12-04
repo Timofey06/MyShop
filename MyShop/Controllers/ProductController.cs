@@ -49,6 +49,12 @@ namespace ShopM4.Controllers
                 {
                     Text = x.Name,
                     Value = x.Id.ToString()
+                }),
+                MyModelList=db.MyModel.Select(x=> 
+                new SelectListItem
+                {
+                    Text=x.Name,
+                    Value=x.Id.ToString()
                 })
             };
 
@@ -93,6 +99,7 @@ namespace ShopM4.Controllers
 
                 productViewModel.Product.Image = imageName + extansion;
                 db.Product.Add(productViewModel.Product);
+                fileStream.Close();
             }
             else
             {
@@ -117,6 +124,7 @@ namespace ShopM4.Controllers
                     
 
                     productViewModel.Product.Image=imageName + extansion;
+                    fileStream.Close();
 
                 }
                 else
@@ -141,6 +149,11 @@ namespace ShopM4.Controllers
             }
             product.Category = db.Category.Find(product.CategoryId);
             if (product.Category==null)
+            {
+                return NotFound();
+            }
+            product.MyModel = db.MyModel.Find(product.MyModelId);
+            if (product.MyModel == null)
             {
                 return NotFound();
             }

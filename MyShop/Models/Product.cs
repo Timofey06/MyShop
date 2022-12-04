@@ -33,10 +33,10 @@ namespace MyShop.Models
 
 
         //дз
-       /* [Display(Name = "MyModel Id")]
+       [Display(Name = "MyModel Id")]
         public int MyModelId { get; set; }
 
         [ForeignKey("MyModelId")]
-        public virtual MyModel MyModel { get; set; }*/
+        public virtual MyModel MyModel { get; set; }
     }
 }
