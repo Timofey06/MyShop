@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MyShop.Data;
 using MyShop.Models;
+using MyShop.Models.ViewModels;
 using System.Diagnostics;
 
 namespace MyShop.Controllers
@@ -7,15 +10,23 @@ namespace MyShop.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private ApplicationDbContext db;
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
         {
+            this.db = db;
             _logger = logger;
+            
         }
 
         public IActionResult Index()
         {
-            return View();
+            HomeViewModel hvm = new HomeViewModel()
+            {
+                Products = db.Product,
+                Categories=db.Category
+            };
+
+            return View(hvm);
         }
 
         public IActionResult Privacy()
