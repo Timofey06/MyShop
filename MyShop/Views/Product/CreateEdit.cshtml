@@ -49,7 +49,14 @@
         </select>
         <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
     </p>
-   
+    <p>
+        <label asp-for="Product.MyModelId"></label>
+        <!--<select asp-for="CategoryId" asp-items="@ViewBag.CategoriesList" class="form-control">-->
+        <select asp-for="Product.MyModelId" asp-items="Model.MyModelList" class="form-control">
+            <option disabled selected>-- Выберете модель --</option>
+        </select>
+        <span asp-validation-for="Product.MyModelId" class="text-danger"></span>
+    </p>
 
     <p>
         @if (Model.Product.Id != 0)
@@ -61,7 +68,7 @@
             <input type="submit" class="btn btn-success" onclick="input()" value="Create" />
         }
 
-        <a class="btn btn-primary" asp-controller="Category" asp-action="Index"> Back </a>
+        <a class="btn btn-primary" asp-controller="Product" asp-action="Index"> Back </a>
     </p>
 
     <p>
