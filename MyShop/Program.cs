@@ -5,6 +5,16 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddHttpContextAccessor();//нужно для работы с сессиями во view
+
+builder.Services.AddSession(option =>
+{
+    option.Cookie.Name = "Winter2022";
+    //option.IdleTimeout=TimeSpan.FromSeconds(10);
+});//для работы с сервисами
+
+
 builder.Services.AddDbContext<ApplicationDbContext>(
     options=>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
@@ -31,5 +41,25 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+/*app.Use((context, next) =>
+{
+    context.Items["name"] = "Dany";
+    return next.Invoke();
+});*/
+app.UseSession();//использование сессии
+/*app.Run(x =>
+{
 
+    //return x.Response.WriteAsync("Hello " + x.Items["name"]);
+    if (x.Session.Keys.Contains("name"))
+    {
+       
+        return x.Response.WriteAsync(x.Session.GetString("name"));
+    }
+    else
+    {
+        x.Session.SetString("name", "Uasya");
+        return x.Response.WriteAsync("no");
+    }
+});*/
 app.Run();

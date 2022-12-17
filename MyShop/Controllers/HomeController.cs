@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MyShop.Data;
 using MyShop.Models;
 using MyShop.Models.ViewModels;
+using MyShop.Utility;
 using System.Diagnostics;
 
 namespace MyShop.Controllers
@@ -27,6 +28,68 @@ namespace MyShop.Controllers
             };
 
             return View(hvm);
+        }
+        public IActionResult Details(int id)
+        {
+            List<Cart> cartList = new List<Cart>();
+
+            if (HttpContext.Session.Get<IEnumerable<Cart>>(PathManager.SessionCard) != null
+                && HttpContext.Session.Get<IEnumerable<Cart>>(PathManager.SessionCard).Count() > 0)
+            {
+                cartList = HttpContext.Session.Get<IEnumerable<Cart>>(PathManager.SessionCard).ToList();
+            }
+
+            DetailsViewModel detailsViewModel = new DetailsViewModel()
+            {
+
+                //Product = db.Product.Find(id),
+                Product = db.Product.Include(x => x.Category).Include(x => x.MyModel).Where(x => x.Id == id).FirstOrDefault(),
+                IsInCart = false
+            };
+            foreach (var i in cartList)
+            {
+                if (i.ProductId==id)
+                {
+                    detailsViewModel.IsInCart = true;
+                }
+            }
+
+            return View(detailsViewModel);
+        }
+        [HttpPost]
+        public IActionResult DetailsPost(int id)
+        {
+            List<Cart> cartList = new List<Cart>();
+            if (HttpContext.Session.Get<IEnumerable<Cart>>(PathManager.SessionCard)!=null
+                && HttpContext.Session.Get<IEnumerable<Cart>>(PathManager.SessionCard).Count()>0)
+            {
+                cartList = HttpContext.Session.Get<IEnumerable<Cart>>(PathManager.SessionCard).ToList();
+            }
+            cartList.Add(new Cart() { ProductId = id });
+
+            HttpContext.Session.Set(PathManager.SessionCard, cartList);
+            return RedirectToAction("Index");
+        }
+        
+        public IActionResult RemoveFromCart(int id)
+        {
+            List<Cart> cartList = new List<Cart>();
+            if (HttpContext.Session.Get<IEnumerable<Cart>>(PathManager.SessionCard) != null
+                && HttpContext.Session.Get<IEnumerable<Cart>>(PathManager.SessionCard).Count() > 0)
+            {
+                cartList = HttpContext.Session.Get<IEnumerable<Cart>>(PathManager.SessionCard).ToList();
+            }
+            for (int i = 0; i < cartList.Count; i++)
+            {
+                if (cartList[i].ProductId==id)
+                {
+                    cartList.RemoveAt(i);
+                    i--;
+                }
+            }
+            HttpContext.Session.Set(PathManager.SessionCard, cartList);
+            return RedirectToAction("Index");
+
         }
 
         public IActionResult Privacy()
