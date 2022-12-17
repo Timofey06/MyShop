@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using MyShop.Utility
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -48,6 +51,24 @@
                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
                             </ul>
                         </li>
+
+                        <li class="nav-item">
+                            @if (HttpContextAccessor.HttpContext.Session.Get<List<Cart>>(PathManager.SessionCard)!=null)
+                            {
+                                var count = HttpContextAccessor.HttpContext.Session.Get<List<Cart>>(PathManager.SessionCard).Count;
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-shopping-cart"></i> &nbsp; (@count)
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-shopping-cart"></i> &nbsp; (0)
+                                </a>
+                            }
+                            
+                        </li>
+
                     </ul>
                 </div>
             </div>
