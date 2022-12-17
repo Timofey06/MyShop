@@ -1,14 +1,13 @@
 ﻿@model MyShop.Models.Product
 
 
-<div class="card filter @Model.Category.Name.Replace(' ','_')" style="width: 18rem; float:left">
+<div class="card" style="width: 18rem;">
     <img src="\@PathManager.ImageProductPass@Model.Image" class="card-img-top" alt="...">
     <div class="card-body">
         <h5 class="card-title">@Model.Name</h5>
         <p class="card-text">
             @Model.ShortDescription
         </p>
-        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary">Details</a>
-        <a href="#" class="btn btn-primary">Add to basket</a>
+        <a href="#" class="btn btn-primary">Details</a>
     </div>
 </div>
