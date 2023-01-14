@@ -6,21 +6,25 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddHttpContextAccessor();//нужно для работы с сессиями во view
+builder.Services.AddHttpContextAccessor();//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ view
 
 builder.Services.AddSession(option =>
 {
     option.Cookie.Name = "Winter2022";
     //option.IdleTimeout=TimeSpan.FromSeconds(10);
-});//для работы с сервисами
+});//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(
     options=>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
     );
-//для генерации таблиц бд
-builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ
+//builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().
+    AddDefaultUI().AddDefaultTokenProviders().
+    AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -44,12 +48,13 @@ app.UseAuthentication();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages(); //РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ РјР°СЂС€СЂСѓС‚Р° Рє СЃС‚СЂР°РЅРёС†Рµ
 /*app.Use((context, next) =>
 {
     context.Items["name"] = "Dany";
     return next.Invoke();
 });*/
-app.UseSession();//использование сессии
+app.UseSession();//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 /*app.Run(x =>
 {
 
