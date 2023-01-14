@@ -23,6 +23,11 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+
+                    <partial name="_LoginPartial"/>
+
+
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -45,10 +50,12 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
                                 </li>
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <div class=" dropdown-divider">
+
+                                </div>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register new admin</a>
+                                </li>
                             </ul>
                         </li>
 
@@ -56,13 +63,13 @@
                             @if (HttpContextAccessor.HttpContext.Session.Get<List<Cart>>(PathManager.SessionCard)!=null)
                             {
                                 var count = HttpContextAccessor.HttpContext.Session.Get<List<Cart>>(PathManager.SessionCard).Count;
-                                <a href="#" class="nav-link">
+                                <a asp-controller="Cart" asp-action="Index" class="nav-link">
                                     <i class="fas fa-shopping-cart"></i> &nbsp; (@count)
                                 </a>
                             }
                             else
                             {
-                                <a href="#" class="nav-link">
+                                <a asp-controller="Cart" asp-action="Index" class="nav-link">
                                     <i class="fas fa-shopping-cart"></i> &nbsp; (0)
                                 </a>
                             }
