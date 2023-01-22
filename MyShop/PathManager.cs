@@ -3,10 +3,10 @@ namespace MyShop
 {
     public static class PathManager
     {
-        public static string ImageProductPass = @"images/product/";
+        public const string ImageProductPass = @"images/product/";
 
-        public static string SessionCard = "SessionCart";
-        public static string AdminRole = "Admin";
-        public static string CustomerRole = "Customer";
+        public const string SessionCard = "SessionCart";
+        public const string AdminRole = "Admin";
+        public const string CustomerRole = "Customer";
     }
 }

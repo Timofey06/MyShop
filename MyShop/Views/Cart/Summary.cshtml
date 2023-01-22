@@ -1,7 +1,7 @@
 ﻿@model MyShop.Models.ViewModels.ProductUserViewModel
 <h1>Summary</h1>
 
-<form>
+<form method="post" asp-action="SummaryPost">
     <!--User-->
     <p>
         <label>Name</label>
@@ -19,17 +19,18 @@
 
     </p>
 
-    @foreach (var item in Model.ProductList)
+    @for (int i = 0; i < Model.ProductList.Count(); i++)
     {
-       
+        <input type="hidden" asp-for=" @Model.ProductList[i].Id" />
+        
         <p>
-            Product Name: @item.Name
+            Product Name: @Model.ProductList[i].Name
         </p>
         <p>
-            Price: @item.Price
+            Price: @Model.ProductList[i].Price
         </p>
-       
     }
+   
     <p>
         <button type="submit" class="btn btn-success form-control">Submit</button>
     </p>
