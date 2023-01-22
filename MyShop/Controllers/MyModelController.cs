@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 using Microsoft.AspNetCore.Mvc;
 using MyShop.Data;
 using MyShop.Models;
@@ -6,6 +8,7 @@ using MyShop.Models;
 
 namespace MyShop.Controllers
 {
+    [Authorize(Roles = PathManager.AdminRole)]
     public class MyModelController : Controller
     {
         private ApplicationDbContext db;

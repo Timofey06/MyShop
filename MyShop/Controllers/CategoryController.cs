@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyShop.Data;
 using MyShop.Models;
@@ -9,6 +11,7 @@ using MyShop.Models;
 
 namespace MyShop.Controllers
 {
+    [Authorize(Roles = PathManager.AdminRole)]
     public class CategoryController : Controller
     {
         private ApplicationDbContext db;

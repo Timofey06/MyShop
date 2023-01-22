@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using MyShop.Data;
 using MyShop.Models;
 using MyShop.Models.ViewModels;
@@ -14,9 +17,13 @@ namespace MyShop.Controllers
     {
        ApplicationDbContext db;
         ProductUserViewModel productUserViewModel;
-        public CartController(ApplicationDbContext db)
+        IWebHostEnvironment webHostEnvironment;
+        IEmailSender emailSender;
+        public CartController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment, IEmailSender emailSender)
         {
             this.db = db;
+            this.webHostEnvironment = webHostEnvironment;
+            this.emailSender=emailSender;
         }
 
         public IActionResult Index()
@@ -37,6 +44,42 @@ namespace MyShop.Controllers
 
             return View(productList);
         }
+        
+        public IActionResult InquiryConfirmation()
+        {
+
+            HttpContext.Session.Clear();
+            return View();
+        }
+        [HttpPost]
+        
+        public async Task<IActionResult> SummaryPost(ProductUserViewModel productUserViewModel)
+        {
+
+           var path= webHostEnvironment.WebRootPath+Path.DirectorySeparatorChar.ToString()+"templates"
+                +Path.DirectorySeparatorChar.ToString()+"Inquiry.html";
+
+            var subject = "New order";
+            string bodyHtml = "";
+            using(StreamReader reader=new StreamReader(path))
+            {
+                bodyHtml = reader.ReadToEnd();
+            }
+            string textProducts = "";
+            foreach (var item in productUserViewModel.ProductList)
+            {
+                textProducts += $"Name: {item.Name}, ID: {item.Id}\n";
+            }
+            string body=string.Format(bodyHtml,
+                productUserViewModel.ApplicationUser.FullName,
+                productUserViewModel.ApplicationUser.Email,
+                productUserViewModel.ApplicationUser.PhoneNumber,
+                textProducts
+                );
+            await emailSender.SendEmailAsync("tima.loktionov6@gmail.com",subject,body);
+            await emailSender.SendEmailAsync(productUserViewModel.ApplicationUser.Email, subject, body);
+            return RedirectToAction("InquiryConfirmation");
+        }
         [HttpPost]
         public IActionResult Summary()
         {
@@ -52,8 +95,8 @@ namespace MyShop.Controllers
 
             }
             List<int> productIdList = cartList.Select(x => x.ProductId).ToList();
-            IEnumerable<Product> productList =
-                db.Product.Where(x => productIdList.Contains(x.Id));
+            IList<Product> productList =
+                db.Product.Where(x => productIdList.Contains(x.Id)).ToList<Product>();
 
 
             productUserViewModel = new ProductUserViewModel()
