@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace MyShop.Migrations
+namespace MyShop_DataMigrations
 {
     public partial class AddProductModel : Migration
     {

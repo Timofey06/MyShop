@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
-using MyShop.Data;
+using MyShop_DataMigrations;
 using MyShop_Models;
 using MyShop_Models.ViewModels;
 using MyShop_Utility;

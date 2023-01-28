@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyShop.Data;
+using MyShop_DataMigrations;
 
 #nullable disable
 
-namespace MyShop.Migrations
+namespace MyShop_DataMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221218164117_IdentityShop")]
-    partial class IdentityShop
+    [Migration("20221204172433_AddShortDescriptionToProductDataBase")]
+    partial class AddShortDescriptionToProductDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
