@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using MyShop.Data;
-using MyShop.Models;
-using MyShop.Models.ViewModels;
-using MyShop.Utility;
+using MyShop_Models;
+using MyShop_Models.ViewModels;
+using MyShop_Utility;
 using System.Security.Claims;
 
 namespace MyShop.Controllers

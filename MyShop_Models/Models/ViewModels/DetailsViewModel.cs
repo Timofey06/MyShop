@@ -1,4 +1,4 @@
-﻿namespace MyShop.Models.ViewModels
+﻿namespace MyShop_Models.ViewModels
 {
     public class DetailsViewModel
     {

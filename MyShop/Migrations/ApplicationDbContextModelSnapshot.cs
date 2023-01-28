@@ -230,7 +230,7 @@ namespace MyShop.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("MyShop.Models.Category", b =>
+            modelBuilder.Entity("MyShop_Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -250,7 +250,7 @@ namespace MyShop.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("MyShop.Models.MyModel", b =>
+            modelBuilder.Entity("MyShop_Models.MyModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -270,7 +270,7 @@ namespace MyShop.Migrations
                     b.ToTable("MyModel");
                 });
 
-            modelBuilder.Entity("MyShop.Models.Product", b =>
+            modelBuilder.Entity("MyShop_Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -312,7 +312,7 @@ namespace MyShop.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("MyShop.Models.ApplicationUser", b =>
+            modelBuilder.Entity("MyShop_Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
@@ -374,15 +374,15 @@ namespace MyShop.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MyShop.Models.Product", b =>
+            modelBuilder.Entity("MyShop_Models.Product", b =>
                 {
-                    b.HasOne("MyShop.Models.Category", "Category")
+                    b.HasOne("MyShop_Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MyShop.Models.MyModel", "MyModel")
+                    b.HasOne("MyShop_Models.MyModel", "MyModel")
                         .WithMany()
                         .HasForeignKey("MyModelId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,12 +1,9 @@
-﻿
-using Mailjet.Client.TransactionalEmails;
-using Mailjet.Client;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Mailjet.Client.Resources;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Net.Mail;
 using System.Net;
+using Microsoft.Extensions.Configuration;
 
-namespace MyShop.Utility
+namespace MyShop_Utility
 {
     public class EmailSender : IEmailSender
     {
@@ -21,7 +18,7 @@ namespace MyShop.Utility
             //return Ececute(email,subject,htmlMessage);
             return GmailExecute(email, subject, htmlMessage);
         }
-        public async Task Ececute(string email, string subject, string htmlmessage)
+        /*public async Task Ececute(string email, string subject, string htmlmessage)
         {
             MailJetSettings mailJetSettings =_configuration.GetSection("MailJet").Get<MailJetSettings>();
             MailjetClient client = new MailjetClient(mailJetSettings.ApiKey,
@@ -41,7 +38,7 @@ namespace MyShop.Utility
                 .Build();
 
             var response = await client.SendTransactionalEmailAsync(emailMessage);
-        }
+        }*/
         public async Task GmailExecute(string email, string subject, string htmlmessage)
         {
             MailAddress from = new MailAddress(PathManager.Email, "Тимофей Локтионов");

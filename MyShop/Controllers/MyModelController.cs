@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using Microsoft.AspNetCore.Mvc;
 using MyShop.Data;
-using MyShop.Models;
+using MyShop_Models;
 
 
 namespace MyShop.Controllers

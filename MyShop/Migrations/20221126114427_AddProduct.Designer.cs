@@ -23,7 +23,7 @@ namespace MyShop.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("MyShop.Models.Category", b =>
+            modelBuilder.Entity("MyShop_Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,7 +43,7 @@ namespace MyShop.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("MyShop.Models.MyModel", b =>
+            modelBuilder.Entity("MyShop_Models.MyModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

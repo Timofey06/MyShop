@@ -1,10 +1,10 @@
 ﻿using System;
-using MyShop.Models;
+using MyShop_Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace MyShop.Models
+namespace MyShop_Models
 {
     public class Product
     {
