@@ -11,7 +11,7 @@ using MyShop.Models;
 
 namespace MyShop.Controllers
 {
-    [Authorize(Roles = PathManager.AdminRole)]
+    //[Authorize(Roles = PathManager.AdminRole)]
     public class CategoryController : Controller
     {
         private ApplicationDbContext db;

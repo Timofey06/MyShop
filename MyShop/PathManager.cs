@@ -8,5 +8,6 @@ namespace MyShop
         public const string SessionCard = "SessionCart";
         public const string AdminRole = "Admin";
         public const string CustomerRole = "Customer";
+        public const string Email = "tima.loktionov6@gmail.com";
     }
 }

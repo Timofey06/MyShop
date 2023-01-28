@@ -8,7 +8,7 @@ using MyShop.Models;
 
 namespace MyShop.Controllers
 {
-    [Authorize(Roles = PathManager.AdminRole)]
+    //[Authorize(Roles = PathManager.AdminRole)]
     public class MyModelController : Controller
     {
         private ApplicationDbContext db;
