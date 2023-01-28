@@ -1,5 +1,6 @@
-﻿using System.Text.Json;
-namespace MyShop.Utility
+﻿using Microsoft.AspNetCore.Http;
+using System.Text.Json;
+namespace MyShop_Utility
 {
     //методы расширения
     public static class ExtensionsSession

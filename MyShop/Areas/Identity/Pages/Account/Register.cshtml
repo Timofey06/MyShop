@@ -1,6 +1,6 @@
 ﻿@page
 @model RegisterModel
-@if (User.IsInRole(MyShop.PathManager.AdminRole))
+@if (User.IsInRole(MyShop_Utility.PathManager.AdminRole))
 {
     <h1>You can register admin account</h1>
 }
@@ -37,7 +37,7 @@ else
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
            
-            @if (User.IsInRole(MyShop.PathManager.AdminRole))
+            @if (User.IsInRole(MyShop_Utility.PathManager.AdminRole))
             {
                 <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-danger">Register admin user</button>
             }

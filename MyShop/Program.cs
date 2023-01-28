@@ -2,7 +2,7 @@ using MyShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using MyShop.Utility;
+using MyShop_Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 

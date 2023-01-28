@@ -1,4 +1,4 @@
-﻿namespace MyShop.Utility
+﻿namespace MyShop_Utility
 {
     public class MailJetSettings
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyShop.Models;
+using MyShop_Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 namespace MyShop.Data
 {

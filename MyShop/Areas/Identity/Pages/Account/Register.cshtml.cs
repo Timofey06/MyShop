@@ -18,8 +18,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using MyShop.Models;
-using MyShop.Models;
+
+using MyShop_Models;
+using MyShop_Models;
+using MyShop_Utility;
 
 namespace MyShop.Areas.Identity.Pages.Account
 {

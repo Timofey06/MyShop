@@ -1,4 +1,4 @@
-﻿namespace MyShop.Models
+﻿namespace MyShop_Models
 {
     public class Cart
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace MyShop
+namespace MyShop_Utility
 {
     public static class PathManager
     {

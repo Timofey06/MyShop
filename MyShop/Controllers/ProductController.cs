@@ -9,8 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using MyShop;
 using MyShop.Data;
 using MyShop.Data;
-using MyShop.Models;
-using MyShop.Models.ViewModels;
+using MyShop_Models;
+using MyShop_Models.ViewModels;
+using MyShop_Utility;
 
 namespace ShopM4.Controllers
 {
