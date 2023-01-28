@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyShop.Data;
+using MyShop_DataMigrations;
 
 #nullable disable
 
-namespace MyShop.Migrations
+namespace MyShop_DataMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221204172433_AddShortDescriptionToProductDataBase")]
-    partial class AddShortDescriptionToProductDataBase
+    [Migration("20221204113327_AddProductModel")]
+    partial class AddProductModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -91,10 +91,6 @@ namespace MyShop.Migrations
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
-
-                    b.Property<string>("ShortDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

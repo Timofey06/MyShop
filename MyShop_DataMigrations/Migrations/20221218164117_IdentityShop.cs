@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace MyShop.Migrations
+namespace MyShop_DataMigrations
 {
-    public partial class MyModelToProduct : Migration
+    public partial class IdentityShop : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

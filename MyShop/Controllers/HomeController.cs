@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MyShop.Data;
+using MyShop_DataMigrations;
 using MyShop_Models;
 using MyShop_Models.ViewModels;
 using MyShop_Utility;

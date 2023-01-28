@@ -1,4 +1,4 @@
-using MyShop.Data;
+using MyShop_DataMigrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;

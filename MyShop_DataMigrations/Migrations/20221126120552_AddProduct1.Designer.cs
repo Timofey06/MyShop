@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyShop.Data;
+using MyShop_DataMigrations;
 
 #nullable disable
 
-namespace MyShop.Migrations
+namespace MyShop_DataMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221204113327_AddProductModel")]
-    partial class AddProductModel
+    [Migration("20221126120552_AddProduct1")]
+    partial class AddProduct1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -82,9 +82,6 @@ namespace MyShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MyModelId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -95,8 +92,6 @@ namespace MyShop.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("MyModelId");
 
                     b.ToTable("Product");
                 });
@@ -109,15 +104,7 @@ namespace MyShop.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MyShop_Models.MyModel", "MyModel")
-                        .WithMany()
-                        .HasForeignKey("MyModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Category");
-
-                    b.Navigation("MyModel");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace MyShop.Migrations
+namespace MyShop_DataMigrations
 {
-    public partial class AddShortdescription : Migration
+    public partial class AddShortDescriptionToProduct : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
