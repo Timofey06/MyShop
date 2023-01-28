@@ -44,14 +44,14 @@ namespace MyShop.Utility
         }
         public async Task GmailExecute(string email, string subject, string htmlmessage)
         {
-            MailAddress from = new MailAddress("tima.loktionov6@gmail.com", "Тимофей Локтионов");
+            MailAddress from = new MailAddress(PathManager.Email, "Тимофей Локтионов");
             MailAddress to = new MailAddress(email);
             MailMessage m = new MailMessage(from, to);
             m.Subject = subject;
             m.Body = htmlmessage;
             m.IsBodyHtml = true;
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
-            smtp.Credentials = new NetworkCredential("tima.loktionov6@gmail.com", "tnwojglzznkyyouy");
+            smtp.Credentials = new NetworkCredential(PathManager.Email, "tnwojglzznkyyouy");
             smtp.EnableSsl = true;
             await smtp.SendMailAsync(m);
             
