@@ -8,7 +8,7 @@ namespace MyShop_Models.Models.ViewModels
 {
     public  class QueryViewModel
     {
-        QueryHeader QueryHeader { get; set; }
+        public QueryHeader QueryHeader { get; set; }
         public IEnumerable<QueryDetail> QueryDetails { get; set; }
     }
 }
