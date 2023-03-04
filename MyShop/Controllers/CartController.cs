@@ -5,7 +5,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using MyShop_DataMigrations;
+using MyShop_DataMigrations.Repository;
+using MyShop_DataMigrations.Repository.IRepository;
 using MyShop_Models;
+using MyShop_Models.Models;
 using MyShop_Models.ViewModels;
 using MyShop_Utility;
 using System.Security.Claims;
@@ -15,15 +18,24 @@ namespace MyShop.Controllers
     
     public class CartController : Controller
     {
-       ApplicationDbContext db;
+        //ApplicationDbContext db;
         ProductUserViewModel productUserViewModel;
         IWebHostEnvironment webHostEnvironment;
         IEmailSender emailSender;
-        public CartController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment, IEmailSender emailSender)
+        IRepositoryApplicationUser repositoryApplicationUser;
+        IRepositoryProduct repositoryProduct;
+        IRepositoryQueryHeader repositoryQueryHeader;
+        IRepositoryQueryDetail repositoryQueryDetail;
+        public CartController(/*ApplicationDbContext db*/ IWebHostEnvironment webHostEnvironment, IEmailSender emailSender
+, IRepositoryProduct repositoryProduct, IRepositoryApplicationUser repositoryApplicationUser, IRepositoryQueryHeader repositoryQueryHeader, IRepositoryQueryDetail repositoryQueryDetail)
         {
-            this.db = db;
+
             this.webHostEnvironment = webHostEnvironment;
-            this.emailSender=emailSender;
+            this.emailSender = emailSender;
+            this.repositoryProduct = repositoryProduct;
+            this.repositoryApplicationUser = repositoryApplicationUser;
+            this.repositoryQueryHeader = repositoryQueryHeader;
+            this.repositoryQueryDetail = repositoryQueryDetail;
         }
 
         public IActionResult Index()
@@ -40,7 +52,7 @@ namespace MyShop.Controllers
             }
             List<int> productIdList = cartList.Select(x => x.ProductId).ToList();
             IEnumerable<Product> productList = 
-                db.Product.Where(x => productIdList.Contains(x.Id));
+                repositoryProduct.GetAll(x => productIdList.Contains(x.Id));
 
             return View(productList);
         }
@@ -58,6 +70,7 @@ namespace MyShop.Controllers
 
            var path= webHostEnvironment.WebRootPath+Path.DirectorySeparatorChar.ToString()+"templates"
                 +Path.DirectorySeparatorChar.ToString()+"Inquiry.html";
+           
 
             var subject = "New order";
             string bodyHtml = "";
@@ -78,6 +91,40 @@ namespace MyShop.Controllers
                 );
             await emailSender.SendEmailAsync("tima.loktionov6@gmail.com",subject,body);
             await emailSender.SendEmailAsync(productUserViewModel.ApplicationUser.Email, subject, body);
+
+            //add data to db by summary
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            QueryHeader queryHeader = new QueryHeader()
+            {
+                ApplicationUserId = productUserViewModel.ApplicationUser.Id,
+                ApplicationUser=repositoryApplicationUser.FirstOrDefault(x=>x.Id==claim.Value),
+                PhoneNumber = productUserViewModel.ApplicationUser.PhoneNumber,
+                FullName = productUserViewModel.ApplicationUser.FullName,
+                QueryDate = DateTime.Now,
+                Email = productUserViewModel.ApplicationUser.Email,
+            };
+            
+            repositoryQueryHeader.Add(queryHeader);
+
+            repositoryQueryHeader.Save();
+            foreach (var item in productUserViewModel.ProductList)
+            {
+                QueryDetail queryDetail = new QueryDetail()
+                {
+                    QueryHeader = queryHeader,
+                    QueryHeaderId = queryHeader.Id,
+                    ProductId=item.Id,
+                    Product=repositoryProduct.FirstOrDefault(x=>x.Id==item.Id)
+
+                };
+                repositoryQueryDetail.Add(queryDetail);
+
+            }
+            repositoryQueryDetail.Save();
+            
+
+
             return RedirectToAction("InquiryConfirmation");
         }
         [HttpPost]
@@ -96,12 +143,12 @@ namespace MyShop.Controllers
             }
             List<int> productIdList = cartList.Select(x => x.ProductId).ToList();
             IList<Product> productList =
-                db.Product.Where(x => productIdList.Contains(x.Id)).ToList<Product>();
+                repositoryProduct.GetAll(x => productIdList.Contains(x.Id)).ToList<Product>();
 
 
             productUserViewModel = new ProductUserViewModel()
             {
-                ApplicationUser=db.ApplicationUser.FirstOrDefault(x=>x.Id==claim.Value),
+                ApplicationUser=repositoryApplicationUser.FirstOrDefault(x=>x.Id==claim.Value),
                 ProductList=productList
                 
             

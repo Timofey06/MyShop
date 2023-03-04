@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using MyShop_Utility;
+using MyShop_DataMigrations.Repository;
+using MyShop_DataMigrations.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,12 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>().
     AddDefaultUI().AddDefaultTokenProviders().
     AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IRepositoryCategory, RepositoryCategory>();
+builder.Services.AddScoped<IRepositoryMyModel, RepositoryMyModel>();
+builder.Services.AddScoped<IRepositoryProduct, RepositoryProduct>();
+builder.Services.AddScoped<IRepositoryQueryHeader, RepositoryQueryHeader>();
+builder.Services.AddScoped<IRepositoryQueryDetail, RepositoryQueryDetail>();
+builder.Services.AddScoped<IRepositoryApplicationUser, RepositoryApplicationUser>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

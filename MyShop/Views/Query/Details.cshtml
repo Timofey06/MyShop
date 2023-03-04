@@ -1,0 +1,38 @@
+﻿@model MyShop_Models.Models.ViewModels.QueryViewModel
+
+
+
+
+
+<form method="post">
+
+    <a asp-action="Index" class="btn btn-success">Back to queries</a>
+    <h2>Information</h2>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td><input asp-for="QueryHeader.FullName" type="text" class="form-control"/></td>
+        </tr>
+         <tr>
+            <td>Phone</td>
+            <td><input asp-for="QueryHeader.PhoneNumber" type="text" class="form-control"/></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input asp-for="QueryHeader.Email" type="text" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td>QueryDate</td>
+            <td><input asp-for="QueryHeader.QueryDate" type="text" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Change" class="form-control btn btn-primary "/></td>
+            <td><input type="submit" value="Delete" class="form-control btn btn-danger " /></td>
+        </tr>
+        
+    </table>
+    <br/>
+    <h2>Details</h2>
+    <h5>Product Name</h5>
+    <p>Price: 100p.</p>
+</form>
