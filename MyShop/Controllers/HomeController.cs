@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyShop_DataMigrations;
+using MyShop_DataMigrations.Repository;
+using MyShop_DataMigrations.Repository.IRepository;
 using MyShop_Models;
 using MyShop_Models.ViewModels;
 using MyShop_Utility;
@@ -11,11 +13,15 @@ namespace MyShop.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private ApplicationDbContext db;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
+        // private ApplicationDbContext db;
+        private IRepositoryCategory repositoryCategory;
+        private IRepositoryProduct repositoryProduct;
+        public HomeController(ILogger<HomeController> logger, IRepositoryProduct repositoryProduct, IRepositoryCategory repositoryCategory)
         {
-            this.db = db;
+            
             _logger = logger;
+            this.repositoryCategory = repositoryCategory;
+            this.repositoryProduct = repositoryProduct;
             
         }
 
@@ -23,8 +29,8 @@ namespace MyShop.Controllers
         {
             HomeViewModel hvm = new HomeViewModel()
             {
-                Products = db.Product,
-                Categories=db.Category
+                Products = repositoryProduct.GetAll(),
+                Categories= repositoryCategory.GetAll()
             };
 
             return View(hvm);
@@ -43,7 +49,9 @@ namespace MyShop.Controllers
             {
 
                 //Product = db.Product.Find(id),
-                Product = db.Product.Include(x => x.Category).Include(x => x.MyModel).Where(x => x.Id == id).FirstOrDefault(),
+                //Product = db.Product.Include(x => x.Category).Include(x => x.MyModel).Where(x => x.Id == id).FirstOrDefault(),
+                Product = repositoryProduct.FirstOrDefault(x=>x.Id == id,
+                $"{PathManager.NameCategory},{PathManager.NameMyModel}"),
                 IsInCart = false
             };
             foreach (var i in cartList)

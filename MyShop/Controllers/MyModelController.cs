@@ -4,24 +4,24 @@ using System.Data;
 using Microsoft.AspNetCore.Mvc;
 using MyShop_DataMigrations;
 using MyShop_Models;
-
+using MyShop_DataMigrations.Repository.IRepository;
 
 namespace MyShop.Controllers
 {
     //[Authorize(Roles = PathManager.AdminRole)]
     public class MyModelController : Controller
     {
-        private ApplicationDbContext db;
+        private IRepositoryMyModel repositoryMyModel;
 
-        public MyModelController(ApplicationDbContext db)
+        public MyModelController(IRepositoryMyModel repositoryMyModel)
         {
-            this.db = db;
+            this.repositoryMyModel = repositoryMyModel;
         }
 
         
         public IActionResult Index()
         {
-            IEnumerable<MyModel> models = db.MyModel;
+            IEnumerable<MyModel> models = repositoryMyModel.GetAll();
 
             return View(models);
         }
@@ -37,8 +37,8 @@ namespace MyShop.Controllers
         {
             if (ModelState.IsValid)  
             {
-                db.MyModel.Add(myModel);
-                db.SaveChanges();
+                repositoryMyModel.Add(myModel);
+                repositoryMyModel.Save();
                 return RedirectToAction("Index");  
             }
 
@@ -54,7 +54,7 @@ namespace MyShop.Controllers
                 return NotFound();
             }
 
-            var myModel = db.MyModel.Find(id);
+            var myModel = repositoryMyModel.Find(id.GetValueOrDefault());
 
             if (myModel == null)
             {
@@ -72,8 +72,8 @@ namespace MyShop.Controllers
         {
             if (ModelState.IsValid)  
             {
-                db.MyModel.Update(myModel); 
-                db.SaveChanges();
+                repositoryMyModel.Update(myModel);
+                repositoryMyModel.Save();
                 return RedirectToAction("Index");  
             }
 
@@ -89,7 +89,7 @@ namespace MyShop.Controllers
                 return NotFound();
             }
 
-            var myModel = db.MyModel.Find(id);
+            var myModel = repositoryMyModel.Find(id.GetValueOrDefault());
 
             if (myModel == null)
             {
@@ -104,15 +104,15 @@ namespace MyShop.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {
-            var myModel = db.MyModel.Find(id);
+            var myModel = repositoryMyModel.Find(id.GetValueOrDefault());
 
             if (myModel == null)
             {
                 return NotFound();
             }
 
-            db.MyModel.Remove(myModel);
-            db.SaveChanges();
+            repositoryMyModel.Remove(myModel);
+            repositoryMyModel.Save();
 
             return RedirectToAction("Index");
         }
