@@ -1,6 +1,6 @@
 ﻿@model MyModel
 
-<h1>Delete Model</h1>
+<h1 class="text-light">Delete Model</h1>
 
 <form method="post" asp-action="DeletePost">
 
@@ -8,12 +8,12 @@
     <input asp-for="Id" hidden />
 
     <p>
-        <label asp-for="Name"></label>
+        <label asp-for="Name" class="text-light"></label>
         <input disabled asp-for="Name" class="form-control" />
     </p>
 
     <p>
-        <label asp-for="Number"></label>
+        <label asp-for="Number" class="text-light"></label>
         <input disabled asp-for="Number" class="form-control" />
     </p>
 

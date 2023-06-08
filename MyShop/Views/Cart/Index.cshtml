@@ -1,37 +1,68 @@
 ﻿@using MyShop_Utility
-@model IEnumerable<Product>
+@model List<Product>
 
-<h1>Shopping Cart</h1>
+<h1 class="text-light">Shopping Cart</h1>
 <p>
     <a class="btn btn-primary" asp-controller="Home">Continue Shopping</a>
+    <a class="btn btn-danger" asp-action="Clear">Clear</a>
 </p>
 @if (Model.Count()>0)
 {
-    <form method="post" asp-action="Summary">
-        
-
-        @foreach (var item in Model)
-        {
-            <p>
-                <img class="rounded" src="/@PathManager.ImageProductPass@item.Image" style="width: 200px">
-            </p>
-            <p>
-                Product Name: @item.Name
-            </p>
-            <p>
-                Description: @item.ShortDescription
-            </p>
-            <p>
-                Price: @item.Price
-            </p>
-            <p>
-                <a class="btn btn-danger" asp-action="Remove" asp-route-id="@item.Id">Trash</a>
-
-            </p>
+    <form method="post" >
+        @{
+            double TotalPriceProducts = 0;
+            
         }
 
+        @for (int i=0; i<Model.Count();i++)
+        {
+            <partial name="_CartProductCard" model="@Model[i]" />
+            <!--
+            <p>
+                <input asp-for="@Model[i].Id"  hidden/>
+            </p>
+            <p>
+                <img class="rounded" src="/@PathManager.ImageProductPass@Model[i].Image" style="width: 200px">
+            </p>
+            <p class="text-light">
+               Count:
+                <input type="text" asp-for="@Model[i].TempCount" class="form-control" />
+            </p>
+            <p class="text-light">
+                TotalPrice: @(Model[i].TempCount * Model[i].Price)
+            </p>
+            -->
+            
+            TotalPriceProducts += Model[i].TempCount * Model[i].Price;
+            <!--
+            <p class="text-light">
+                Product Name: @Model[i].Name
+            </p>
+            <p class="text-light">
+                Description: @Model[i].ShortDescription
+            </p>
+            <p class="text-light">
+                Price: @Model[i].Price
+            </p>
+            <p>
+                <a class="btn btn-danger" asp-action="Remove" asp-route-id="@Model[i].Id">Trash</a>
+
+            </p>
+            -->
+        }
         <p>
-            <button type="submit" class="btn btn-success"> Continue</button>
+            <h2 class="text-light">Total: @TotalPriceProducts</h2>
+        </p>
+        @if (User.IsInRole(PathManager.AdminRole))
+        {
+            <p>
+                <input type="submit" value="Update Cart" class=" btn btn-info form-control"
+               asp-action="Update" />
+            </p>
+        }
+       
+        <p>
+            <button type="submit" class="btn btn-success" asp-action="Summary"> Continue</button>
         </p>
     </form>
 

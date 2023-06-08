@@ -23,7 +23,7 @@ namespace MyShop_DataMigrations.Repository.IRepository
             );
         void Add (T iteam);
         void Remove(T iteam);
-       
+        void Remove(IEnumerable<T> iteams);
         void Save();
     }
 }

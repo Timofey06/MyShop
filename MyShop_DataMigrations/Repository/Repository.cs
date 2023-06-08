@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MyShop_DataMigrations.Repository.IRepository;
 using MyShop_DataMigrations;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace MyShop_DataMigrations.Repository
 {
@@ -95,6 +96,11 @@ namespace MyShop_DataMigrations.Repository
         public void Remove(T iteam)
         {
             dbSet.Remove(iteam);
+        }
+
+        public void Remove(IEnumerable<T> iteams)
+        {
+            dbSet.RemoveRange(iteams);
         }
 
         public void Save()

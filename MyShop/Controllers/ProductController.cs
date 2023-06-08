@@ -17,7 +17,7 @@ using MyShop_Utility;
 namespace ShopM4.Controllers
 {
 
-    //[Authorize(Roles = PathManager.AdminRole)]
+    [Authorize(Roles = PathManager.AdminRole)]
     public class ProductController : Controller
     {
         private IRepositoryProduct repositoryProduct;

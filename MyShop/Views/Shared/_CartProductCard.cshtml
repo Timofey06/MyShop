@@ -1,0 +1,23 @@
+﻿@using MyShop_Utility
+@model MyShop_Models.Product
+
+
+<div class="card" style="width: 18rem;">
+    <img src="\@PathManager.ImageProductPass@Model.Image" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">Name: @Model.Name</h5>
+        <p class="card-text">
+            @Model.ShortDescription
+        </p>
+        <p>
+            Count: @Model.TempCount
+        </p>
+        <p>
+            Price: @Model.Price
+        </p>
+        <p>
+            TotalPrice: @(Model.TempCount * Model.Price)
+        </p>
+
+    </div>
+</div>

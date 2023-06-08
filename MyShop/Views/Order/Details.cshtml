@@ -1,0 +1,190 @@
+﻿@using MyShop_Models.Models.ViewModels
+@using MyShop_Utility
+@model OrderHeaderDetailViewModel
+<form method="post">
+    <input asp-for="OrderHeader.Id" hidden/>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm text-light">
+                Detatils
+            </div>
+            <div class="col-sm m-2">
+                <a asp-controller="Order" asp-action="Index" class="btn form-control btn-primary text-light">Back to Orderrs</a>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <div class="row">
+                    <h2 class="text-light">Details Order</h2>
+                </div>
+                <div class="row m-2">
+                    <div class="col-3 text-light">
+                        Full Name:
+                    </div>
+                    <div class="col-9">
+                        <input type="text" asp-for="OrderHeader.FullName" class="form-control"/>
+                        <span asp-validation-for="OrderHeader.FullName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-3 text-light">
+                        Email:
+                    </div>
+                    <div class="col-9">
+                        <input type="text" asp-for="OrderHeader.Email" class="form-control" />
+                        <span asp-validation-for="OrderHeader.Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-3 text-light">
+                        Phone:
+                    </div>
+                    <div class="col-9">
+                        <input type="text" asp-for="OrderHeader.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-3 text-light">
+                        City:
+                    </div>
+                    <div class="col-9">
+                        <input type="text" asp-for="OrderHeader.City" class="form-control" />
+                        <span asp-validation-for="OrderHeader.City" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-3 text-light">
+                        Street:
+                    </div>
+                    <div class="col-9">
+                       
+                        <input type="text" asp-for="OrderHeader.Street" class="form-control" />
+                        <span asp-validation-for="OrderHeader.Street" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-3 text-light">
+                        House:
+                    </div>
+                    <div class="col-9">
+                        <input type="text" asp-for="OrderHeader.House" class="form-control" />
+                        <span asp-validation-for="OrderHeader.House" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-3 text-light">
+                        Apartment:
+                    </div>
+                    <div class="col-9">
+                        <input type="text" asp-for="OrderHeader.Apartament" class="form-control" />
+                        <span asp-validation-for="OrderHeader.Apartament" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-3 text-light">
+                        PostelCode:
+                    </div>
+                    <div class="col-9">
+                        <input type="text" asp-for="OrderHeader.PostalCode" class="form-control" />
+                        <span asp-validation-for="OrderHeader.PostalCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-3 text-light">
+                        Date Order:
+                    </div>
+                    <div class="col-9">
+                        <input type="text" asp-for="OrderHeader.OrderDate" class="form-control" readonly />
+                        
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-3 text-light">
+                        DateExecution:
+                    </div>
+                    <div class="col-9">
+                        <input type="text" asp-for="OrderHeader.DateExecution" class="form-control" readonly />
+
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-3 text-light">
+                        Transaction:
+                    </div>
+                    <div class="col-9">
+                        <input type="text" asp-for="OrderHeader.TransactionId" class="form-control" readonly/>
+                        
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-3 text-light">
+                        Status:
+                    </div>
+                    <div class="col-9">
+                        <input type="text" asp-for="OrderHeader.Status" class="form-control" readonly />
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="row">
+                    <h2 class="text-light">Details Product</h2>
+                </div>
+               
+                @foreach (var item in Model.OrderDetail)
+                {
+                    <!--
+                    <div class="row bg-light m-2">
+                        <h5 class="text-light">Product Name: @item.Product.Name</h5>
+                        <div class="col-sm text-light">
+                            Price :  @item.Product.Price
+                        </div>
+                        <div class="col-sm text-light">
+                            Count :  @item.Count
+                        </div>
+                        <div class="col-sm text-light">
+                            Total :  @(item.PricePerUnit*item.Count)
+                           
+                        </div>
+                    </div>
+                    -->
+                    <partial name="_CartProductCard" model="item.Product"/>
+                }
+                <div class="row">
+                    <div class="col-sm">
+                        <h2 class="text-light">Final Total: @Model.OrderHeader.TotalPrice</h2>
+                    </div>
+                </div>
+                @if(Model.OrderHeader.Status==PathManager.StatusAccepted||
+                Model.OrderHeader.Status==PathManager.StatusPending){
+                    <div class="row m-2">
+                        <div class="col-sm">
+                            <input type="submit" value="In Processing" asp-action="StartInProcessing" class="btn btn-primary form-control" />
+                        </div>
+                    </div>
+                }
+                @if (Model.OrderHeader.Status == PathManager.StatusInProcessed)
+                {
+                    <div class="row m-2">
+                        <div class="col-sm">
+                            <input type="submit" value="Order Done" asp-action="StartOrderDone" class="btn btn-success form-control" />
+                        </div>
+                    </div>
+                }
+                
+                @if (Model.OrderHeader.Status!=PathManager.StatusDenied)
+                {
+                    <div class="row m-2">
+                        <div class="col-sm">
+                            <input type="submit" value="Cancel Order" asp-action="StartOrderCancel" class="btn btn-danger form-control" />
+                        </div>
+                    </div>
+                }
+                
+               
+            </div>
+        </div>
+    </div>
+</form>

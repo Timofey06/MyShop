@@ -65,7 +65,7 @@ namespace MyShop.Controllers
             return View(detailsViewModel);
         }
         [HttpPost]
-        public IActionResult DetailsPost(int id)
+        public IActionResult DetailsPost(int id, DetailsViewModel detailsViewModel)
         {
             List<Cart> cartList = new List<Cart>();
             if (HttpContext.Session.Get<IEnumerable<Cart>>(PathManager.SessionCard)!=null
@@ -73,7 +73,7 @@ namespace MyShop.Controllers
             {
                 cartList = HttpContext.Session.Get<IEnumerable<Cart>>(PathManager.SessionCard).ToList();
             }
-            cartList.Add(new Cart() { ProductId = id });
+            cartList.Add(new Cart() { ProductId = id, Count=detailsViewModel.Product.TempCount});
 
             HttpContext.Session.Set(PathManager.SessionCard, cartList);
             return RedirectToAction("Index");

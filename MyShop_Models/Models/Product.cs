@@ -39,5 +39,9 @@ namespace MyShop_Models
 
         [ForeignKey("MyModelId")]
         public virtual MyModel MyModel { get; set; }
+
+        [NotMapped]
+        [Range(1, 100)]
+        public int TempCount { get; set; } = 1;
     }
 }

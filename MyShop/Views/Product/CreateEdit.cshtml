@@ -10,7 +10,7 @@
     title = "Edit Product";
 }
 
-<h1>@title</h1>
+<h1 class="text-light">@title</h1>
 
 <form method="post" enctype="multipart/form-data">
 
@@ -18,37 +18,37 @@
     <input asp-for="Product.Id" hidden />
 
     <p>
-        <label asp-for="Product.Name"></label>
+        <label asp-for="Product.Name" class="text-light"></label>
         <input asp-for="Product.Name" class="form-control" />
         <span asp-validation-for="Product.Name" class="text-danger"></span>
     </p>
 
     <p>
-        <label asp-for="Product.Price"></label>
+        <label asp-for="Product.Price" class="text-light"></label>
         <input asp-for="Product.Price" class="form-control" />
         <span asp-validation-for="Product.Price" class="text-danger"></span>
     </p>
 
     <p>
-        <label asp-for="Product.Description"></label>
+        <label asp-for="Product.Description" class="text-light"></label>
         <!--<input asp-for="Product.Description" class="form-control" />-->
         <textarea asp-for="Product.Description" class="form-control summernote"></textarea>
         <span asp-validation-for="Product.Description" class="text-danger"></span>
     </p>
     <p>
-        <label asp-for="Product.ShortDescription"></label>
+        <label asp-for="Product.ShortDescription" class="text-light"></label>
         <!--<input asp-for="Product.Description" class="form-control" />-->
         <input asp-for="Product.ShortDescription" class="form-control ">
         <span asp-validation-for="Product.ShortDescription" class="text-danger"></span>
     </p>
     <p>
-        <label asp-for="Product.Image"></label>
+        <label asp-for="Product.Image" class="text-light"></label>
         <input type="file" name="files" class="form-control" id="uploadedImage" multiple />
         
     </p>
 
     <p>
-        <label asp-for="Product.CategoryId"></label>
+        <label asp-for="Product.CategoryId" class="text-light"></label>
         <!--<select asp-for="CategoryId" asp-items="@ViewBag.CategoriesList" class="form-control">-->
         <select asp-for="Product.CategoryId" asp-items="Model.CategoriesList" class="form-control">
             <option disabled selected>-- Выберете категорию --</option>
@@ -56,7 +56,7 @@
         <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
     </p>
     <p>
-        <label asp-for="Product.MyModelId"></label>
+        <label asp-for="Product.MyModelId" class="text-light"></label>
         <!--<select asp-for="CategoryId" asp-items="@ViewBag.CategoriesList" class="form-control">-->
         <select asp-for="Product.MyModelId" asp-items="Model.MyModelList" class="form-control">
             <option disabled selected>-- Выберете модель --</option>
@@ -98,6 +98,7 @@
         $(document).ready(function () {
             $('.summernote').summernote({
                 height: 200
+                background: light
             });
         });
 

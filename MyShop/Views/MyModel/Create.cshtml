@@ -1,16 +1,16 @@
 ﻿@model MyModel
 
-<h1>Add Models</h1>
+<h1 class="text-light">Add Models</h1>
 
 <form method="post" asp-action="Create">
     <p>
-        <label asp-for="Name"></label>
+        <label asp-for="Name" class="text-light"></label>
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </p>
 
     <p>
-        <label asp-for="Number"></label>
+        <label asp-for="Number" class="text-light"></label>
         <input asp-for="Number" class="form-control" />
         <span asp-validation-for="Number" class="text-danger"></span>
     </p>

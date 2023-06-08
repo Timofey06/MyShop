@@ -18,6 +18,24 @@
     <p>
         @Html.Raw(Model.Product.Description)
     </p>
+    @if (true)
+    {
+        <p>Count: </p>
+        
+        if (Model.IsInCart)
+        {
+            <p>
+                <input asp-for="@Model.Product.TempCount" class="form-control" disabled/>
+            </p>
+        }
+        else
+        {
+            <p>
+                <input asp-for="@Model.Product.TempCount" class="form-control" />
+            </p>
+        }
+       
+    }
     <p>
         <a class="btn btn-primary" asp-action="Index"> Back </a>
         @if (!Model.IsInCart)

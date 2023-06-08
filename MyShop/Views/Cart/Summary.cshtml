@@ -1,38 +1,182 @@
-﻿@model MyShop_Models.ViewModels.ProductUserViewModel
-<h1>Summary</h1>
+﻿@using MyShop_Utility
+@model MyShop_Models.ViewModels.ProductUserViewModel
+<h1 class="text-light">Summary</h1>
 
-<form method="post" asp-action="SummaryPost">
+<form method="post" asp-action="SummaryPost" id="payment-form">
     <!--User-->
     <p>
-        <label>Name</label>
+        <label class="text-light">Name</label>
         <input class="form-control" type="text" asp-for="@Model.ApplicationUser.FullName"/>
+        <span asp-validation-for="ApplicationUser.FullName" class="text-danger"></span>
 
     </p>
     <p>
-        <label>Phone</label>
-        <input class="form-control" type="text" asp-for="@Model.ApplicationUser.PhoneNumber" />
+        <label class="text-light">Phone</label>
+        <input class="form-control" type="text" asp-for="@Model.ApplicationUser.PhoneNumber" required />
+        <span asp-validation-for="ApplicationUser.PhoneNumber" class="text-danger"></span>
 
     </p>
     <p>
-        <label>Email</label>
-        <input class="form-control" type="text" asp-for="@Model.ApplicationUser.Email" />
+        <label class="text-light">Email</label>
+        <input class="form-control" type="text" asp-for="@Model.ApplicationUser.Email" required/>
+        <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
 
     </p>
 
+    <!--Admin-->
+        @if (User.IsInRole(PathManager.AdminRole))
+        {
+            <p>
+                <label class="text-light">City</label>
+                <input type="text" asp-for="@Model.ApplicationUser.City" class="form-control"/>
+                <span asp-validation-for="ApplicationUser.City" class="text-danger"></span>
+            </p>
+            <p>
+                <label class="text-light">Street</label>
+                <input type="text" asp-for="@Model.ApplicationUser.Street" class="form-control"/>
+                    <span asp-validation-for="ApplicationUser.Street" class="text-danger"></span>
+            </p>
+            <p>
+                <label class="text-light">House</label>
+                <input type="text" asp-for="@Model.ApplicationUser.House" class="form-control"/>
+                <span asp-validation-for="ApplicationUser.House" class="text-danger"></span>
+            </p>
+             <p>
+                <label class="text-light">Appartment</label>
+                 <input type="text" asp-for="@Model.ApplicationUser.Apartament" class="form-control" />
+                <span asp-validation-for="ApplicationUser.Apartament" class="text-danger"></span>
+             </p>
+             <p>
+                <label class="text-light">PostalCode</label>
+                 <input type="text" asp-for="@Model.ApplicationUser.PostalCode" class="form-control"/>
+                <span asp-validation-for="ApplicationUser.PostalCode" class="text-danger"></span>
+            </p>
+        }
+   
+    @{
+        double totalpriceProducts = 0;
+    }
     @for (int i = 0; i < Model.ProductList.Count(); i++)
     {
         <input type="hidden" asp-for=" @Model.ProductList[i].Id" />
-        
-        <p>
+        <input type="hidden" asp-for=" @Model.ProductList[i].Price" />
+        <input type="hidden" asp-for=" @Model.ProductList[i].TempCount" />
+        <!--<p class="text-light">
             Product Name: @Model.ProductList[i].Name
-        </p>
+        </p>-->
+        @if (true)
+        {
+            <!--<p class="text-light" type="hidden">
+                Count: @Model.ProductList[i].TempCount
+            </p>
+            <p class="text-light" type="hidden">
+                Total Price: @(Model.ProductList[i].TempCount*Model.ProductList[i].Price)
+            </p>-->
+            totalpriceProducts += Model.ProductList[i].TempCount * Model.ProductList[i].Price;
+        }
+        else
+        {
+           <!-- <p class="text-light" type="hidden">
+                Price: @Model.ProductList[i].Price
+            </p>-->
+        }
+        <partial name="_CartProductCard" model="@Model.ProductList[i]"/>
+    }
+
+
+
+    <h3 class="text-light">
+        Total Price Product: @totalpriceProducts
+    </h3>
+
+    @if (User.IsInRole(PathManager.AdminRole))
+    {
+        <div class="chekout container">
+            <div id="dropin-container"></div>
+            <input id="nonce" name="payment_method_nonce" type="hidden"/>
+        </div>
+    }
+
+
+    <p>
+        <button type="submit" class="btn btn-primary form-control" onclick="return funcValidation">Submit Query</button>
+    </p>
+    @if (User.IsInRole(PathManager.AdminRole))
+    {
         <p>
-            Price: @Model.ProductList[i].Price
+            <button type="submit" class="btn btn-success form-control" onclick="return funcValidation">Submit Order</button>
         </p>
     }
-   
-    <p>
-        <button type="submit" class="btn btn-success form-control">Submit</button>
-    </p>
+    
 </form>
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
 
+        <script src="https://js.braintreegateway.com/web/dropin/1.34.0/js/dropin.min.js"></script>
+
+        <script>
+            var tokenClient = "@ViewBag.TokenClient";
+
+            var form = document.querySelector('#payment-form');
+
+            // подключение для braintree
+            braintree.dropin.create({
+                authorization: tokenClient,
+                container: '#dropin-container'
+            },
+
+                // первый параметр для ошибки, второй - экземпляр подключения
+                function (error, dropinInstance) {
+                    // тут происходит обработка события
+                    form.addEventListener('submit', function () {
+                        // блочим автоматическую передачу формы
+                        event.preventDefault();
+
+                        // добавить nonce в форму и затем отправить ее
+                        dropinInstance.requestPaymentMethod(function (err, payload) {
+                            // отправить nonce на наш сервер
+                            document.querySelector('#nonce').value = payload.nonce;
+
+                            form.submit();
+                        })
+                    })
+                });
+            // функция валидации
+            function funcValidation() {
+                var full_name = document.getElementById("ApplicationUser_FullName").value;
+                var phone = document.getElementById("ApplicationUser_PhoneNumber").value;
+                var email = document.getElementById("ApplicationUser_Email").value;
+
+                if (full_name == '') {
+                    Swal.fire(
+                        'Error!',
+                        'Пожалуйста, введите имя!',
+                        'error'
+                    )
+                    return false;
+                }
+
+                if (phone == '') {
+                    Swal.fire(
+                        'Error!',
+                        'Пожалуйста, введите номер телефона!',
+                        'error'
+                    )
+                    return false;
+                }
+
+                if (email == '') {
+                    Swal.fire(
+                        'Error!',
+                        'Пожалуйста, введите Email!',
+                        'error'
+                    )
+                    return false;
+                }
+
+                return true;
+            }
+        </script>
+    }
+    }

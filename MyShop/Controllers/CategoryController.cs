@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using MyShop_DataMigrations;
 using MyShop_Models;
 using MyShop_DataMigrations.Repository.IRepository;
-
+using MyShop_Utility;
 
 namespace MyShop.Controllers
 {
-    //[Authorize(Roles = PathManager.AdminRole)]
+    [Authorize(Roles = PathManager.AdminRole)]
     public class CategoryController : Controller
     {
         //private ApplicationDbContext db;
@@ -45,9 +45,10 @@ namespace MyShop.Controllers
             {
                 repositoryCategory.Add(category);
                 repositoryCategory.Save();
+                TempData[PathManager.Success] = "OK!";
                 return RedirectToAction("Index");  // переход на страницу категорий
             }
-
+            TempData[PathManager.Error] = "Error!";
             return View(category);
         }
 
@@ -119,6 +120,9 @@ namespace MyShop.Controllers
 
             repositoryCategory.Remove(category);
             repositoryCategory.Save();
+            
+            TempData[PathManager.Success] = "Deleted!";
+          
 
             return RedirectToAction("Index");
         }
