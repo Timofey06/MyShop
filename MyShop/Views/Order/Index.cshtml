@@ -1,0 +1,44 @@
+﻿@using MyShop_Models.Models.ViewModels
+@model OrderViewModel
+
+
+<h1 class="text-light">Order page</h1>
+<form method="get">
+    <div class="row" style="padding:5px">
+        <div class="col-2">
+            @Html.Editor("searchName", new {htmlAttributes=new{@class ="form-control", @placeholder ="input Name"}})
+        </div>
+        <div class="col-2">
+            @Html.Editor("searchEmail", new {htmlAttributes=new{@class ="form-control", @placeholder ="input Email"}})
+        </div>
+        <div class="col-2">
+            @Html.Editor("searchPhone", new {htmlAttributes=new{@class ="form-control",
+            @placeholder ="input Phone"}})
+        </div>
+        <div class="col-2">
+            @Html.DropDownListFor(x=>x.StatusList,Model.StatusList,"- Status -", new{@class ="form-control"})
+        </div>
+        <div class="col-2">
+            <button type="submit" class="btn btn-primary form-control">Search</button>
+        </div>
+    </div>
+    
+</form>
+<div>
+    <ejs-grid id="Grid" dataSource="@Model.OrderHeaderList" allowFiltering="true" allowSorting="true" allowPaging="true">
+        <e-grid-filtersettings type="Menu"></e-grid-filtersettings>
+        <e-grid-loadingIndicator indicatorType="Shimmer"></e-grid-loadingIndicator>
+        <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+        <e-grid-columns>
+            <e-grid-column field="Id"  width="120" headerText="Id" isPrimaryKey="true"></e-grid-column>
+            <e-grid-column field="FullName"  headerText="FullName"></e-grid-column>
+            <e-grid-column field="Email" headerText="Email"></e-grid-column>
+            <e-grid-column field="PhoneNumber" headerText="PhoneNumber"></e-grid-column>
+            <e-grid-column field="Status" headerText="Status"></e-grid-column>
+            <e-grid-column field="OrderDate" headerText="OrderDate" customFormat="@(new {type="date",format="dd.MM.yyyy"})"></e-grid-column>
+            <e-grid-column field="Id" headertext=""
+                    template="<a href ='Order/Details/${Id}' class='btn btn-primary'>Go</a> "></e-grid-column>
+        </e-grid-columns>
+    </ejs-grid>
+</div>
+

@@ -5,11 +5,11 @@ VisualStudioVersion = 17.3.32611.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyShop", "MyShop\MyShop.csproj", "{A0558799-E998-4AD3-AE6D-B1592A701BB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShop_Utility", "MyShop_Utility\MyShop_Utility.csproj", "{D39BFA52-DBBC-48D5-8353-FA1C8EC436E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyShop_Utility", "MyShop_Utility\MyShop_Utility.csproj", "{D39BFA52-DBBC-48D5-8353-FA1C8EC436E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShop_Models", "MyShop_Models\MyShop_Models.csproj", "{8C53A85B-61D0-4454-B153-4717792380E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyShop_Models", "MyShop_Models\MyShop_Models.csproj", "{8C53A85B-61D0-4454-B153-4717792380E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShop_DataMigrations", "MyShop_DataMigrations\MyShop_DataMigrations.csproj", "{A27C209B-8D41-4031-A4C5-79BF25521440}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyShop_DataMigrations", "MyShop_DataMigrations\MyShop_DataMigrations.csproj", "{A27C209B-8D41-4031-A4C5-79BF25521440}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

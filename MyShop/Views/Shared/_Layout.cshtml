@@ -12,13 +12,15 @@
     <link rel="stylesheet" href="~/MyShop.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/fontawesome/css/all.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/21.1.35/material.css" />
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-dark">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MyShop</a>
+                <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">MyShop</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -31,7 +33,7 @@
 
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         
                        
@@ -42,9 +44,9 @@
 
 
 
-                            @if (/*User.IsInRole(PathManager.AdminRole)*/true)
+                            @if (User.IsInRole(PathManager.AdminRole))
                             {
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Managment
                                 </a>
                                 <ul class="dropdown-menu">
@@ -74,16 +76,20 @@
 
 
 
-                            @if (/*User.IsInRole(PathManager.AdminRole)*/true)
+                            @if (User.IsInRole(PathManager.AdminRole))
                             {
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Orders
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Query" asp-action="Index">Query</a>
-                                    </li>
+                                        
                                     
+                                    </li>
+                                   <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Order</a>
+                                   </li>
 
 
 
@@ -96,13 +102,13 @@
                             @if (HttpContextAccessor.HttpContext.Session.Get<List<Cart>>(PathManager.SessionCard)!=null)
                             {
                                 var count = HttpContextAccessor.HttpContext.Session.Get<List<Cart>>(PathManager.SessionCard).Count;
-                                <a asp-controller="Cart" asp-action="Index" class="nav-link">
+                                <a asp-controller="Cart" asp-action="Index" class="nav-link text-light">
                                     <i class="fas fa-shopping-cart"></i> &nbsp; (@count)
                                 </a>
                             }
                             else
                             {
-                                <a asp-controller="Cart" asp-action="Index" class="nav-link">
+                                <a asp-controller="Cart" asp-action="Index" class="nav-link text-light">
                                     <i class="fas fa-shopping-cart"></i> &nbsp; (0)
                                 </a>
                             }
@@ -116,6 +122,7 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <partial name="Notification" />
             @RenderBody()
         </main>
     </div>
@@ -128,11 +135,13 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"><script/>
-    
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.syncfusion.com/ej2/21.1.35/dist/ej2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <!-- Syncfusion ASP.NET Core Script Manager -->
+    <ejs-scripts></ejs-scripts>
 </body>
 </html>

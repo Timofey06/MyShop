@@ -7,7 +7,7 @@
 
 
 
-<h1>@title</h1>
+<h1 class="text-light">@title</h1>
 
 <form method="post"  asp-action="DeletePost">
 
@@ -15,34 +15,34 @@
     <input asp-for="Id" hidden />
 
     <p>
-        <label asp-for="Name"></label>
+        <label asp-for="Name" class="text-light"></label>
         <input asp-for="Name" class="form-control" disabled/>
        
     </p>
 
     <p>
-        <label asp-for="Price"></label>
+        <label asp-for="Price" class="text-light"></label>
         <input asp-for="Price" class="form-control" disabled/>
        
     </p>
 
     <p>
-        <label asp-for="Description"></label>
+        <label asp-for="Description" class="text-light"></label>
         <!--<input asp-for="Product.Description" class="form-control" />-->
         <textarea asp-for="Description" class="form-control summernote" disabled></textarea>
     </p>
     <p>
-        <label asp-for="ShortDescription"></label>
+        <label asp-for="ShortDescription" class="text-light"></label>
         <!--<input asp-for="Product.Description" class="form-control" />-->
         <input asp-for="ShortDescription" class="form-control " disabled>
         
     </p>
     <p>
-        <label asp-for="CategoryId"></label>
+        <label asp-for="CategoryId" class="text-light"></label>
         <input asp-for="Category.Name" class="form-control" disabled/>
     </p>
     <p>
-        <label asp-for="MyModelId"></label>
+        <label asp-for="MyModelId" class="text-light"></label>
         <input asp-for="MyModel.Name" class="form-control" disabled />
     </p>
     <p>
@@ -70,6 +70,7 @@
         $(document).ready(function () {
             $('.summernote').summernote({
                 height: 200
+                background: light
                 disable: true
             });
         });

@@ -1,0 +1,17 @@
+﻿@if (TempData[MyShop_Utility.PathManager.Success] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!-- include toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>toastr.info('@TempData[MyShop_Utility.PathManager.Success]')</script>
+}
+@if (TempData[MyShop_Utility.PathManager.Error] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!-- include toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>toastr.info('@TempData[MyShop_Utility.PathManager.Error]')</script>
+}
+

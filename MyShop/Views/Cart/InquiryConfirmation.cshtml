@@ -1,4 +1,16 @@
-﻿<div class="text-center">
-    <h1>Information</h1>
-    <p>We sent the message to you!</p>
+﻿@using MyShop_Models.Models
+
+@model OrderHeader
+<div class="text-center">
+    <h1 class="text-light">Information</h1>
+    @if (Model!=null)
+    {
+        <h2 class="text-light">Order was created</h2>
+    }
+    else
+    {
+        <h2 class="text-light">Query was created</h2>
+        <p class="text-light">We sent the message to you!</p>
+    }
+    
 </div>
