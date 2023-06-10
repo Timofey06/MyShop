@@ -4,23 +4,23 @@
 <form method="post" asp-action="DetailsPost" >
    
     <p>
-        <h2>@Model.Product.Name</h2>
-        <h2>@Model.Product.Price</h2>
+        <h2 class="text-light">@Model.Product.Name</h2>
+        <h2 class="text-light">@Model.Product.Price</h2>
 
     </p>
     <p>
         <img src="/@PathManager.ImageProductPass@Model.Product.Image"
     </p>
     <p>
-        <h3>@Model.Product.Category.Name</h3>
+        <h3 class="text-light">@Model.Product.Category.Name</h3>
 
     </p>
-    <p>
+    <p class="text-light">
         @Html.Raw(Model.Product.Description)
     </p>
     @if (true)
     {
-        <p>Count: </p>
+        <p class="text-light">Count: </p>
         
         if (Model.IsInCart)
         {
