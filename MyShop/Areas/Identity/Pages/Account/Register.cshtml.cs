@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-
+using MyShop_DataMigrations.Repository.IRepository;
 using MyShop_Models;
 using MyShop_Models;
 using MyShop_Utility;
@@ -33,6 +33,7 @@ namespace MyShop.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IRepositoryApplicationUser repositoryApplicationUser;
 
 
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -41,7 +42,8 @@ namespace MyShop.Areas.Identity.Pages.Account
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender, RoleManager<IdentityRole> _roleManager)
+            IEmailSender emailSender, RoleManager<IdentityRole> _roleManager,
+            IRepositoryApplicationUser repositoryApplicationUser)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -50,6 +52,7 @@ namespace MyShop.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             this._roleManager = _roleManager;
+            this.repositoryApplicationUser = repositoryApplicationUser;
         }
 
         /// <summary>
@@ -126,6 +129,7 @@ namespace MyShop.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
@@ -145,15 +149,22 @@ namespace MyShop.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    if (User.IsInRole(PathManager.AdminRole))
+                    if (repositoryApplicationUser.GetAll().Count()>1)
                     {
-                        await _userManager.AddToRoleAsync(user, PathManager.AdminRole);
+                        if (User.IsInRole(PathManager.AdminRole))
+                        {
+                            await _userManager.AddToRoleAsync(user, PathManager.AdminRole);
+                        }
+                        else
+                        {
+                            await _userManager.AddToRoleAsync(user, PathManager.CustomerRole);
+                        }
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(user, PathManager.CustomerRole);
+                        await _userManager.AddToRoleAsync(user, PathManager.AdminRole);
                     }
-                   
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
