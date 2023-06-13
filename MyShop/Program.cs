@@ -6,6 +6,8 @@ using MyShop_Utility;
 using MyShop_DataMigrations.Repository;
 using MyShop_DataMigrations.Repository.IRepository;
 using MyShop_Utility.BrainTree;
+using static System.Formats.Asn1.AsnWriter;
+using MyShop_DataMigrations.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,10 +24,15 @@ builder.Services.AddSession(options =>
 builder.Services.AddDbContext<ApplicationDbContext>(
     options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+    
+    
 );
 
+
+
+
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
- //   .AddEntityFrameworkStores<ApplicationDbContext>();
+//   .AddEntityFrameworkStores<ApplicationDbContext>();
 
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 //    .AddEntityFrameworkStores<ApplicationDbContext>();

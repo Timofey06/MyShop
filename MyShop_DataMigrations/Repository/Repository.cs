@@ -19,7 +19,9 @@ namespace MyShop_DataMigrations.Repository
         public Repository(ApplicationDbContext db)
         {
             this.db = db;
+            db.Database.Migrate();
             dbSet = db.Set<T>();
+            
         }
         public void Add(T iteam)
         {

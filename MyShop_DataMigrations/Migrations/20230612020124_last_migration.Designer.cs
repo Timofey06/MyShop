@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MyShop_DataMigrations.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230608122243_TestPgSQL")]
-    partial class TestPgSQL
+    [Migration("20230612020124_last_migration")]
+    partial class last_migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
