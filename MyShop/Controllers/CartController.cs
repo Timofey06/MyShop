@@ -100,7 +100,7 @@ namespace MyShop.Controllers
                 OrderHeader orderHeader = new OrderHeader()
                 {
                     AdminId = claim.Value,
-                    OrderDate=DateTime.Now,
+                    OrderDate=DateTime.UtcNow,
                     TotalPrice=totalPrice,
                     Status=PathManager.StatusPending,
                     FullName=productUserViewModel.ApplicationUser.FullName,
@@ -177,17 +177,17 @@ namespace MyShop.Controllers
                 await emailSender.SendEmailAsync(productUserViewModel.ApplicationUser.Email, subject, body);
 
                 //add data to db by summary
-               
+
                 QueryHeader queryHeader = new QueryHeader()
                 {
                     ApplicationUserId = productUserViewModel.ApplicationUser.Id,
                     ApplicationUser = repositoryApplicationUser.FirstOrDefault(x => x.Id == claim.Value),
                     PhoneNumber = productUserViewModel.ApplicationUser.PhoneNumber,
                     FullName = productUserViewModel.ApplicationUser.FullName,
-                    QueryDate = DateTime.Now,
+                    QueryDate = DateTime.UtcNow,
                     Email = productUserViewModel.ApplicationUser.Email,
                 };
-
+                
                 repositoryQueryHeader.Add(queryHeader);
 
                 repositoryQueryHeader.Save();
